@@ -1,3 +1,4 @@
+Escenario1
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,6 @@
           overflow: hidden;
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       }
-
       /* Botón "Volver a la Estación" en esquina superior derecha */
       #backToStationButton {
           position: fixed;
@@ -38,17 +38,14 @@
           gap: 8px;
           backdrop-filter: blur(10px);
       }
-
       #backToStationButton:hover {
           background: linear-gradient(135deg, #d97706, #b45309);
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
       }
-
       #backToStationButton:active {
           transform: translateY(0);
       }
-
       /* Responsive para el botón */
       @media (max-width: 768px) {
           #backToStationButton {
@@ -58,7 +55,6 @@
               font-size: 0.9em;
           }
       }
-
       /* Estilo general para los contenedores de UI superpuestos */
       .ui-overlay {
           display: none;
@@ -76,11 +72,10 @@
           max-width: 90%;
           width: 650px;
           border: 1px solid rgba(148, 163, 184, 0.2);
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 
-                      0 0 0 1px rgba(255, 255, 255, 0.05);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6),
+                       0 0 0 1px rgba(255, 255, 255, 0.05);
           animation: slideIn 0.3s ease-out;
       }
-
       @keyframes slideIn {
           from {
               opacity: 0;
@@ -91,7 +86,6 @@
               transform: translate(-50%, -50%);
           }
       }
-
       .ui-overlay h2 {
           margin-top: 0;
           margin-bottom: 16px;
@@ -103,7 +97,6 @@
           font-weight: 700;
           text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       }
-
       .ui-overlay p {
           margin-bottom: 24px;
           font-size: 1.1em;
@@ -111,7 +104,6 @@
           color: #e2e8f0;
           font-weight: 400;
       }
-
       /* Estilos mejorados para los botones de opción */
       .option-button {
           display: block;
@@ -132,7 +124,6 @@
           overflow: hidden;
           border: 1px solid rgba(255, 255, 255, 0.1);
       }
-
       .option-button::before {
           content: '';
           position: absolute;
@@ -143,22 +134,18 @@
           background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
           transition: left 0.5s;
       }
-
       .option-button:hover::before {
           left: 100%;
       }
-
       .option-button:hover {
           background: linear-gradient(135deg, #5b21b6, #8b5cf6);
           transform: translateY(-2px);
           box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
       }
-
       .option-button strong {
           color: #fbbf24;
           font-weight: 600;
       }
-
       /* Estilos mejorados para las ventanas de resultado */
       .result-window h3 {
           background: linear-gradient(135deg, #10b981, #059669);
@@ -169,7 +156,6 @@
           font-size: 1.5em;
           font-weight: 600;
       }
-
       .result-window p {
           text-align: left;
           font-size: 1em;
@@ -179,7 +165,6 @@
           border-left: 4px solid #10b981;
           line-height: 1.6;
       }
-
       .close-button {
           padding: 14px 32px;
           margin-top: 24px;
@@ -193,13 +178,11 @@
           transition: all 0.3s ease;
           box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
       }
-
       .close-button:hover {
           background: linear-gradient(135deg, #dc2626, #b91c1c);
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
       }
-
       /* Contenedor de descripción de situación mejorado */
       #situationDescriptionContainer {
           display: block;
@@ -219,7 +202,6 @@
           box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
           animation: fadeInUp 0.5s ease-out;
       }
-
       @keyframes fadeInUp {
           from {
               opacity: 0;
@@ -230,7 +212,6 @@
               transform: translateY(0);
           }
       }
-
       #situationDescriptionContainer h2 {
           font-size: 1.6em;
           margin-bottom: 16px;
@@ -240,14 +221,12 @@
           background-clip: text;
           font-weight: 600;
       }
-
       #situationDescriptionContainer p {
           font-size: 1em;
           margin-bottom: 20px;
           line-height: 1.5;
           color: #e2e8f0;
       }
-
       #situationDescriptionContainer .start-scenario-button {
           padding: 16px 28px;
           background: linear-gradient(135deg, #3b82f6, #1d4ed8);
@@ -262,13 +241,11 @@
           box-sizing: border-box;
           box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
       }
-
       #situationDescriptionContainer .start-scenario-button:hover {
           background: linear-gradient(135deg, #1d4ed8, #1e40af);
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
       }
-
       /* Chat UI mejorado */
       #chat-container {
           position: fixed;
@@ -286,7 +263,6 @@
           box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
           animation: fadeInDown 0.5s ease-out;
       }
-
       @keyframes fadeInDown {
           from {
               opacity: 0;
@@ -297,7 +273,6 @@
               transform: translateY(0);
           }
       }
-
       #chat-container h1 {
           margin-top: 0;
           font-size: 1.8em;
@@ -309,14 +284,12 @@
           font-weight: 600;
           margin-bottom: 20px;
       }
-
       #chat-form {
           display: flex;
           flex-direction: column;
           gap: 16px;
           margin-top: 20px;
       }
-
       /* Estilos mejorados para el textarea */
       #chat-form textarea {
           padding: 16px;
@@ -333,36 +306,29 @@
           max-height: 150px;
           line-height: 1.5;
       }
-
       #chat-form textarea:focus {
           outline: none;
           border-color: #8b5cf6;
           box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
       }
-
       #chat-form textarea::placeholder {
           color: #94a3b8;
       }
-
       /* Scrollbar personalizado para el textarea */
       #chat-form textarea::-webkit-scrollbar {
           width: 6px;
       }
-
       #chat-form textarea::-webkit-scrollbar-track {
           background: rgba(15, 23, 42, 0.3);
           border-radius: 3px;
       }
-
       #chat-form textarea::-webkit-scrollbar-thumb {
           background: #8b5cf6;
           border-radius: 3px;
       }
-
       #chat-form textarea::-webkit-scrollbar-thumb:hover {
           background: #7c3aed;
       }
-
       #chat-form button {
           padding: 16px 20px;
           background: linear-gradient(135deg, #10b981, #059669);
@@ -375,13 +341,11 @@
           transition: all 0.3s ease;
           box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
       }
-
       #chat-form button:hover {
           background: linear-gradient(135deg, #059669, #047857);
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
       }
-
       #respuesta {
           margin-top: 20px;
           padding: 20px;
@@ -395,31 +359,25 @@
           border-left: 4px solid #8b5cf6;
           color: #e2e8f0;
       }
-
       #respuesta::-webkit-scrollbar {
           width: 6px;
       }
-
       #respuesta::-webkit-scrollbar-track {
           background: rgba(15, 23, 42, 0.3);
           border-radius: 3px;
       }
-
       #respuesta::-webkit-scrollbar-thumb {
           background: #8b5cf6;
           border-radius: 3px;
       }
-
       #respuesta::-webkit-scrollbar-thumb:hover {
           background: #7c3aed;
       }
-
       /* Indicador de carga mejorado */
       .loading {
           display: inline-block;
           position: relative;
       }
-
       .loading::after {
           content: '';
           display: inline-block;
@@ -431,13 +389,11 @@
           animation: spin 1s linear infinite;
           margin-left: 8px;
       }
-
       @keyframes spin {
           to {
               transform: rotate(360deg);
           }
       }
-
 /* Estilos para ventanas minimizables */
 .minimize-button {
     position: absolute;
@@ -459,46 +415,38 @@
     z-index: 10;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
-
 .minimize-button:hover {
     background: linear-gradient(135deg, #4b5563, #374151);
     transform: scale(1.1);
 }
-
 .minimized {
     height: 60px !important;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 .minimized .minimize-content {
     opacity: 0;
     transform: translateY(-20px);
     transition: all 0.3s ease;
 }
-
 .window-header {
     position: relative;
     padding-right: 50px;
     margin-bottom: 20px;
 }
-
 .minimized .window-header {
     margin-bottom: 0;
 }
-
 .minimized h1 {
     font-size: 1.2em !important;
     margin-bottom: 0 !important;
     line-height: 1.2;
 }
-
 .minimized h2 {
     font-size: 1.2em !important;
     margin-bottom: 0 !important;
     line-height: 1.2;
 }
-
 /* Animaciones para minimizar/maximizar */
 @keyframes minimizeWindow {
     from {
@@ -510,7 +458,6 @@
         opacity: 0.9;
     }
 }
-
 @keyframes maximizeWindow {
     from {
         height: 60px;
@@ -521,7 +468,6 @@
         opacity: 1;
     }
 }
-
 /* Responsive para ventanas minimizadas */
 @media (max-width: 768px) {
     .minimize-button {
@@ -531,14 +477,206 @@
         top: 10px;
         right: 10px;
     }
-    
     .minimized {
         height: 50px !important;
     }
 }
+
+/* Controles de cámara info */
+.camera-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #94a3b8;
+    font-size: 0.8em;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    z-index: 50;
+}
   </style>
+
+  <script>
+    // Componente de fuego optimizado (menos partículas, mejor rendimiento)
+    AFRAME.registerComponent('optimized-fire', {
+      schema: {
+        size: { type: 'number', default: 1 },
+        intensity: { type: 'number', default: 1 }
+      },
+      init: function () {
+        const el = this.el;
+        const data = this.data;
+
+        // Colores del fuego
+        const fireColors = ['#FF0000', '#FF4500', '#FF6600', '#FF8800', '#FFAA00'];
+
+        // Crear menos partículas pero más efectivas (30 en lugar de 150)
+        for (let i = 0; i < 30 * data.intensity; i++) {
+          const fireParticle = document.createElement('a-sphere');
+          const radius = Math.random() * data.size * 0.15 + 0.08;
+          const color = fireColors[Math.floor(Math.random() * fireColors.length)];
+
+          fireParticle.setAttribute('radius', radius);
+          fireParticle.setAttribute('color', color);
+          fireParticle.setAttribute('opacity', Math.random() * 0.7 + 0.5);
+          fireParticle.setAttribute('shader', 'flat');
+
+          const startX = (Math.random() - 0.5) * data.size * 1.5;
+          const startY = Math.random() * data.size * 0.3;
+          const startZ = (Math.random() - 0.5) * data.size * 1.5;
+
+          fireParticle.setAttribute('position', {
+            x: startX,
+            y: startY,
+            z: startZ
+          });
+
+          // Animación más simple y eficiente
+          fireParticle.setAttribute('animation', {
+            property: 'position',
+            to: `${startX + (Math.random() - 0.5)} ${startY + data.size * 2} ${startZ + (Math.random() - 0.5)}`,
+            dur: 800 + Math.random() * 400,
+            loop: true,
+            dir: 'alternate',
+            easing: 'easeOutQuad'
+          });
+
+          // Animación de escala más suave
+          fireParticle.setAttribute('animation__scale', {
+            property: 'scale',
+            from: '1 1 1',
+            to: '0.5 0.5 0.5',
+            dur: 800 + Math.random() * 400,
+            loop: true,
+            dir: 'alternate',
+            easing: 'easeInOutQuad'
+          });
+
+          el.appendChild(fireParticle);
+        }
+      }
+    });
+
+    // Componente de humo optimizado
+    AFRAME.registerComponent('optimized-smoke', {
+      schema: {
+        size: { type: 'number', default: 1 },
+        color: { type: 'string', default: '#333333' }
+      },
+      init: function () {
+        const el = this.el;
+        const data = this.data;
+
+        // Crear menos partículas de humo (50 en lugar de 200)
+        for (let i = 0; i < 50; i++) {
+          const smokeParticle = document.createElement('a-sphere');
+          const radius = Math.random() * data.size * 0.6 + 0.4;
+
+          smokeParticle.setAttribute('radius', radius);
+          smokeParticle.setAttribute('color', data.color);
+          smokeParticle.setAttribute('opacity', Math.random() * 0.3 + 0.1);
+          smokeParticle.setAttribute('shader', 'flat');
+
+          const startX = (Math.random() - 0.5) * data.size * 4;
+          const startY = Math.random() * data.size;
+          const startZ = (Math.random() - 0.5) * data.size * 4;
+
+          smokeParticle.setAttribute('position', {
+            x: startX,
+            y: startY,
+            z: startZ
+          });
+
+          // Animación de elevación del humo
+          smokeParticle.setAttribute('animation', {
+            property: 'position',
+            to: `${startX + (Math.random() - 0.5) * 3} ${startY + 8 + Math.random() * 5} ${startZ + (Math.random() - 0.5) * 3}`,
+            dur: 6000 + Math.random() * 4000,
+            loop: true,
+            dir: 'alternate',
+            easing: 'easeOutQuad'
+          });
+
+          // Animación de escala
+          smokeParticle.setAttribute('animation__scale', {
+            property: 'scale',
+            from: '1 1 1',
+            to: `${1.5 + Math.random()} ${1.5 + Math.random()} ${1.5 + Math.random()}`,
+            dur: 6000 + Math.random() * 4000,
+            loop: true,
+            dir: 'alternate',
+            easing: 'easeOutQuad'
+          });
+
+          el.appendChild(smokeParticle);
+        }
+      }
+    });
+
+    // Componente de brasas optimizado
+    AFRAME.registerComponent('optimized-embers', {
+      schema: {
+        count: { type: 'number', default: 15 },
+        size: { type: 'number', default: 1 }
+      },
+      init: function () {
+        const el = this.el;
+        const data = this.data;
+
+        for (let i = 0; i < data.count; i++) {
+          const ember = document.createElement('a-sphere');
+          const radius = Math.random() * 0.04 + 0.02;
+
+          ember.setAttribute('radius', radius);
+          ember.setAttribute('color', '#FF6600');
+          ember.setAttribute('opacity', Math.random() * 0.8 + 0.4);
+          ember.setAttribute('shader', 'flat');
+
+          const startX = (Math.random() - 0.5) * data.size * 2;
+          const startY = Math.random() * data.size * 0.5;
+          const startZ = (Math.random() - 0.5) * data.size * 2;
+
+          ember.setAttribute('position', {
+            x: startX,
+            y: startY,
+            z: startZ
+          });
+
+          // Animación de brasas volando
+          ember.setAttribute('animation', {
+            property: 'position',
+            to: `${startX + (Math.random() - 0.5) * 6} ${startY + 4 + Math.random() * 3} ${startZ + (Math.random() - 0.5) * 6}`,
+            dur: 2000 + Math.random() * 2000,
+            loop: true,
+            dir: 'alternate',
+            easing: 'easeOutQuart'
+          });
+
+          // Parpadeo de brasas
+          ember.setAttribute('animation__opacity', {
+            property: 'opacity',
+            from: 0.8,
+            to: 0.2,
+            dur: 300 + Math.random() * 500,
+            loop: true,
+            dir: 'alternate',
+            easing: 'easeInOutSine'
+          });
+
+          el.appendChild(ember);
+        }
+      }
+    });
+  </script>
 </head>
 <body>
+  <!-- Controles de cámara info -->
+  <div class="camera-controls">
+      🎮 Mouse: mirar • WASD: moverte • SPACE: subir • SHIFT: bajar
+  </div>
+
   <!-- Botón "Volver a la Estación" -->
   <button id="backToStationButton">
       🏠 Volver a la Estación
@@ -550,25 +688,57 @@
           <a-mixin id="floor-material"
                    material="color: #2d5a27; roughness: 0.8; metalness: 0.1"
                    shadow="receive: true; cast: false"></a-mixin>
-          <a-asset-item id="japanese-house" src="tokyo_japanese_house__casa_japonesa_low_poly.glb"></a-asset-item>
+          <a-asset-item id="oficina" src="oficina.glb"></a-asset-item>
       </a-assets>
 
-      <!-- Lighting mejorado -->
-      <a-light type="ambient" color="#404040" intensity="0.6"></a-light>
+      <!-- Iluminación dramática para simular incendio -->
+      <a-light type="ambient" color="#ff4444" intensity="0.5"></a-light>
       <a-light type="directional"
                position="0 100 -40"
-               color="#ffffff"
-               intensity="1.2"
+               color="#ff6600"
+               intensity="1.8"
                shadow="cast: true; mapSize: 2048 2048"
                light="castShadow: true"></a-light>
-      
-      <!-- Iluminación adicional para mejor visibilidad -->
+
+      <!-- Luces parpadeantes para simular fuego -->
       <a-light type="point"
-               position="10 10 10"
-               color="#fbbf24"
-               intensity="2"
+               id="fire-light-1"
+               position="8 4 5"
+               color="#ff3300"
+               intensity="4"
+               distance="25"
+               decay="2"
+               animation="property: intensity; to: 1.5; dur: 400; dir: alternate; loop: true; easing: easeInOutSine">
+      </a-light>
+
+      <a-light type="point"
+               id="fire-light-2"
+               position="-6 3 3"
+               color="#ff6600"
+               intensity="3.5"
                distance="20"
-               decay="1">
+               decay="2"
+               animation="property: intensity; to: 1; dur: 600; dir: alternate; loop: true; easing: easeInOutSine; delay: 200">
+      </a-light>
+
+      <a-light type="point"
+               id="fire-light-3"
+               position="0 5 -8"
+               color="#ff9900"
+               intensity="3"
+               distance="18"
+               decay="2"
+               animation="property: intensity; to: 0.8; dur: 500; dir: alternate; loop: true; easing: easeInOutSine; delay: 300">
+      </a-light>
+
+      <a-light type="point"
+               id="fire-light-4"
+               position="10 2 -3"
+               color="#ff4400"
+               intensity="2.5"
+               distance="15"
+               decay="2"
+               animation="property: intensity; to: 0.5; dur: 700; dir: alternate; loop: true; easing: easeInOutSine; delay: 100">
       </a-light>
 
       <!-- Floor mejorado -->
@@ -581,15 +751,46 @@
                shadow="receive: true">
       </a-plane>
 
-      <!-- Japanese House Model (único objeto GLB) -->
+      <!-- Modelo de oficina -->
       <a-gltf-model id="house-model"
-                    src="#japanese-house"
-                    position="0 0 0"
-                    scale="0.02 0.02 0.02"
+                    src="#oficina"
+                    position="0 -5 0"
+                    scale="1 1 1"
                     shadow="cast: true; receive: true">
       </a-gltf-model>
 
-      <!-- Player Camera con controles personalizados (sin modificar) -->
+      <!-- Sistema de fuego optimizado alrededor del modelo -->
+      <a-entity id="fire-system" position="0 -3 0">
+          <!-- Focos principales de fuego estratégicamente ubicados -->
+          <a-entity position="8 0 5" optimized-fire="size: 3; intensity: 1.2"></a-entity>
+          <a-entity position="-6 0 3" optimized-fire="size: 2.5; intensity: 1"></a-entity>
+          <a-entity position="0 0 -8" optimized-fire="size: 4; intensity: 1.5"></a-entity>
+          <a-entity position="10 0 -3" optimized-fire="size: 2.8; intensity: 1.1"></a-entity>
+          <a-entity position="-8 0 -2" optimized-fire="size: 3.2; intensity: 1.3"></a-entity>
+
+          <!-- Focos adicionales más pequeños -->
+          <a-entity position="5 0 8" optimized-fire="size: 2; intensity: 0.8"></a-entity>
+          <a-entity position="-4 0 6" optimized-fire="size: 2.2; intensity: 0.9"></a-entity>
+      </a-entity>
+
+      <!-- Sistema de humo optimizado -->
+      <a-entity id="smoke-system" position="0 0 0">
+          <a-entity position="8 0 5" optimized-smoke="size: 4; color: #222222"></a-entity>
+          <a-entity position="-6 0 3" optimized-smoke="size: 3.5; color: #333333"></a-entity>
+          <a-entity position="0 0 -8" optimized-smoke="size: 5; color: #111111"></a-entity>
+          <a-entity position="10 0 -3" optimized-smoke="size: 3.8; color: #444444"></a-entity>
+          <a-entity position="-8 0 -2" optimized-smoke="size: 4.2; color: #222222"></a-entity>
+      </a-entity>
+
+      <!-- Sistema de brasas optimizado -->
+      <a-entity id="ember-system" position="0 -2 0">
+          <a-entity position="8 0 5" optimized-embers="count: 20; size: 3"></a-entity>
+          <a-entity position="-6 0 3" optimized-embers="count: 15; size: 2.5"></a-entity>
+          <a-entity position="0 0 -8" optimized-embers="count: 25; size: 4"></a-entity>
+          <a-entity position="10 0 -3" optimized-embers="count: 12; size: 2.8"></a-entity>
+      </a-entity>
+
+      <!-- Player Camera con controles personalizados -->
       <a-entity id="rig"
                 position="0 2 -40"
                 rotation="0 180 0"
@@ -610,7 +811,7 @@
         <button class="minimize-button" id="contextMinimizeBtn" title="Minimizar/Maximizar">−</button>
     </div>
     <div class="minimize-content">
-        <p>Te encuentras frente a una estructura con humo denso y una puerta extremadamente caliente. Hay un riesgo inminente de combustión súbita (flashover). Tu experiencia y conocimiento determinarán el éxito de la operación.</p>
+        <p> Se ha producido un incendio en una sala de oficinas. La causa es una sobrecarga eléctrica. Las llamas están contenidas en un área pequeña, pero hay presencia de corriente eléctrica activa y humo denso que reduce la visibilidad.</p>
         <button id="startScenarioButton" class="start-scenario-button">🚨 Evaluar Opciones de Acción</button>
     </div>
 </div>
@@ -618,40 +819,40 @@
   <!-- Ventana de alternativas de acción -->
   <div id="optionsContainer" class="ui-overlay">
       <h2>⚠️ Alternativas de Acción Críticas</h2>
-      <p>Situación: Humo denso, puerta caliente, riesgo inminente de flashover/backdraft. Como comandante de incidente, tu decisión puede salvar vidas o ponerlas en peligro extremo.</p>
+      <p>Situación: La sala contiene equipos electrónicos sensibles, lo que hace que el uso de agua sea una preocupación mayor debido a posibles daños</p>
       <button class="option-button" data-target="window1">
-          <strong>Opción A:</strong> Ventilación Agresiva Inmediata
-          <br><small style="opacity: 0.8;">Abrir todas las ventanas y puertas para evacuar el humo</small>
+          <strong>Opción A:</strong> Ataque Inmediato con Agua Pulverizada
+          <br><small style="opacity: 0.8;">Los bomberos proceden a utilizar chorros de agua pulverizada para enfriar el ambiente y sofocar las llamas.</small>
       </button>
       <button class="option-button" data-target="window2">
-          <strong>Opción B:</strong> Ataque Directo sin Evaluación
+          <strong>Opción B:</strong> Uso Masivo de Polvo Químico Seco sin Consideración del Entorno
           <br><small style="opacity: 0.8;">Entrada inmediata con línea de ataque directo</small>
       </button>
       <button class="option-button" data-target="window3">
-          <strong>Opción C:</strong> Control de Ventilación y Enfriamiento
+          <strong>Opción C:</strong>  Desconexión Eléctrica y Extinción con CO2
           <br><small style="opacity: 0.8;">Enfriamiento de gases y ventilación controlada</small>
       </button>
   </div>
 
   <!-- Ventanas de resultado mejoradas -->
   <div id="window1" class="ui-overlay result-window">
-      <h3>❌ Opción A: Ventilación Agresiva (INCORRECTA)</h3>
-      <p><strong>Análisis Técnico:</strong> Esta decisión es extremadamente peligrosa y puede resultar fatal. La ventilación agresiva sin control en un incendio limitado por ventilación (ILV) introduce oxígeno de manera descontrolada a un ambiente saturado de gases combustibles calientes. Esto puede desencadenar un flashover instantáneo o un backdraft explosivo, poniendo en riesgo mortal a todo el equipo de bomberos.</p>
-      <p><strong>Consecuencias:</strong> Posible muerte o lesiones graves del personal, propagación acelerada del incendio, pérdida total de la estructura.</p>
+      <h3>❌ Opción A: Ataque Inmediato con Agua Pulverizada (INCORRECTA)</h3>
+      <p><strong>Análisis Técnico:</strong> "Nunca apagar un incendio de origen eléctrico con agua". Aunque el agua pulverizada minimiza el daño por agua, sigue siendo un conductor de electricidad.</p>
+      <p><strong>Consecuencias:</strong> Riesgo de electrocución para los bomberos y puede causar daños irreparables a los equipos electrónicos sensibles.</p>
       <button class="close-button">✓ Entendido, Continuar Entrenamiento</button>
   </div>
 
   <div id="window2" class="ui-overlay result-window">
-      <h3>❌ Opción B: Ataque Directo (INCORRECTA)</h3>
-      <p><strong>Análisis Técnico:</strong> El ataque directo sin evaluación previa de las condiciones internas es una táctica obsoleta y peligrosa. Los indicadores visuales (humo denso, puerta caliente) señalan claramente un incendio en fase de crecimiento con acumulación de gases combustibles. La entrada sin preparación adecuada expone al equipo a temperaturas extremas y posible atrapamiento por flashover.</p>
-      <p><strong>Consecuencias:</strong> Quemaduras graves, desorientación del equipo, posible colapso estructural, escalada del incendio.</p>
+      <h3>❌ Opción B: Uso Masivo de Polvo Químico Seco (INCORRECTA)</h3>
+      <p><strong>Análisis Técnico:</strong> Si bien el polvo químico seco es efectivo para fuegos eléctricos, la fuente 1 señala que tiene inconvenientes, como la capacidad de causar daños en equipos delicados al ser muy abrasivo.</p>
+      <p><strong>Consecuencias:</strong> Las partículas en suspensión pueden dificultar la visibilidad y las labores de extinción y rescate. </p>
       <button class="close-button">✓ Entendido, Continuar Entrenamiento</button>
   </div>
 
   <div id="window3" class="ui-overlay result-window">
-      <h3>✅ Opción C: Control y Enfriamiento (CORRECTA)</h3>
-      <p><strong>Análisis Técnico:</strong> Excelente decisión táctica. Esta estrategia implementa los principios modernos de supresión de incendios basados en la dinámica de fluidos y transferencia de calor. El enfriamiento de gases con agua pulverizada reduce la temperatura por debajo del punto de ignición, mientras que la ventilación controlada evita la entrada descontrolada de oxígeno que podría causar un evento de combustión súbita.</p>
-      <p><strong>Beneficios:</strong> Máxima seguridad del personal, control efectivo del incendio, preservación de evidencias, minimización de daños por agua y humo.</p>
+      <h3>✅ Opción C: Desconexión Eléctrica y Extinción con CO2 (CORRECTA)</h3>
+      <p><strong>Análisis Técnico:</strong> Excelente decisión táctica. La primera prioridad es cortar el suministro eléctrico del área afectada, siempre que sea seguro y posible de forma remota o por personal capacitado. Una vez confirmada la ausencia de corriente eléctrica, o si la desconexión no es posible, se procede a la extinción utilizando extintores de dióxido de carbono (CO2). El CO2 actúa por sofocación al desplazar el oxígeno, y por enfriamiento. Se debe tener precaución con la ventilación del recinto después de la extinción, ya que el CO2 puede provocar asfixia por desplazamiento de oxígeno si se acumula en espacios cerrados.</p>
+      <p><strong>Beneficios:</strong> El CO2 es el agente extintor recomendado para fuegos con presencia de tensión eléctrica y es un gas, por lo que no daña la electrónica como el agua o el polvo. La desconexión de la energía es una medida fundamental de seguridad.</p>
       <button class="close-button">✓ Excelente, Continuar Entrenamiento</button>
   </div>
 
@@ -727,7 +928,7 @@
           const optionButtons = document.querySelectorAll('.option-button');
           const closeButtons = document.querySelectorAll('.close-button');
           const resultWindows = document.querySelectorAll('.result-window');
-          
+
           // Elementos del chat
           const chatContainer = document.getElementById('chat-container');
           const chatForm = document.getElementById("chat-form");
@@ -816,15 +1017,12 @@
               mensajeTextarea.addEventListener('input', function() {
                   autoResizeTextarea(this);
               });
-
-              // Redimensionar al cargar la página
               autoResizeTextarea(mensajeTextarea);
           }
 
           // Event listener para el botón "Volver a la Estación"
           if (backToStationButton) {
               backToStationButton.addEventListener('click', () => {
-                  // Efecto visual antes de la redirección
                   backToStationButton.style.transform = 'scale(0.95)';
                   setTimeout(() => {
                       window.location.href = 'index.html';
@@ -873,10 +1071,9 @@
               e.preventDefault();
               const mensaje = mensajeTextarea.value.trim();
               if (!mensaje) return;
-              
-              // Mostrar indicador de carga mejorado
+
               respuestaDiv.innerHTML = '<span class="loading">🤖 Analizando consulta y generando respuesta especializada...</span>';
-              
+
               try {
                 const res = await fetch("https://chatbot-backend-bz24.onrender.com/chat", {
                   method: "POST",
@@ -885,11 +1082,11 @@
                   },
                   body: JSON.stringify({ mensaje })
                 });
-                
+
                 if (!res.ok) {
                   throw new Error(`Error del servidor: ${res.status}`);
                 }
-                
+
                 const data = await res.json();
                 respuestaDiv.innerHTML = `<strong>🔥 Respuesta del Experto:</strong><br><br>${data.respuesta || "Sin respuesta disponible."}`;
               } catch (error) {
@@ -897,7 +1094,7 @@
                 console.error('Error en chat:', error);
               } finally {
                 mensajeTextarea.value = "";
-                autoResizeTextarea(mensajeTextarea); // Resetear el tamaño del textarea
+                autoResizeTextarea(mensajeTextarea);
               }
             });
           }
@@ -913,5 +1110,6 @@
           }
       });
   </script>
+
 </body>
 </html>
