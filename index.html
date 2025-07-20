@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Simulador de Entrenamiento Teórico para Bomberos - Bienvenida</title>
+  <meta name="description" content="Plataforma virtual de entrenamiento teórico para bomberos">
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+      body {
+          margin: 0;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          overflow: hidden;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      /* Estilo para la ventana de bienvenida inicial */
+      .start-overlay {
+          display: block;
+          position: fixed;
+          top: 30px;
+          right: 30px;
+          width: 400px;
+          max-width: 90%;
+          background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+          backdrop-filter: blur(20px);
+          padding: 28px;
+          border-radius: 20px;
+          text-align: center;
+          color: white;
+          z-index: 100;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6),
+                       0 0 0 1px rgba(255, 255, 255, 0.05);
+          animation: slideInRight 0.5s ease-out;
+      }
+      /* Estilo para la ventana de selección de escenarios */
+      .welcome-overlay {
+          display: none;
+          position: fixed;
+          top: 30px;
+          right: 30px;
+          width: 450px;
+          max-width: 90%;
+          background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+          backdrop-filter: blur(20px);
+          padding: 28px;
+          border-radius: 20px;
+          text-align: center;
+          color: white;
+          z-index: 100;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6),
+                       0 0 0 1px rgba(255, 255, 255, 0.05);
+          animation: slideInRight 0.5s ease-out;
+      }
+      @keyframes slideInRight {
+          from {
+              opacity: 0;
+              transform: translateX(100%);
+          }
+          to {
+              opacity: 1;
+              transform: translateX(0);
+          }
+      }
+      @keyframes slideIn {
+          from {
+              opacity: 0;
+              transform: translate(-50%, -60%);
+          }
+          to {
+              opacity: 1;
+              transform: translate(-50%, -50%);
+          }
+      }
+      .start-overlay h1, .welcome-overlay h1 {
+          margin-top: 0;
+          margin-bottom: 16px;
+          background: linear-gradient(135deg, #fbbf24, #f59e0b);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          font-size: 1.8em;
+          font-weight: 700;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          line-height: 1.2;
+      }
+      .start-overlay p {
+          margin-bottom: 24px;
+          font-size: 1em;
+          line-height: 1.5;
+          color: #e2e8f0;
+          font-weight: 400;
+      }
+      .welcome-overlay p {
+          margin-bottom: 24px;
+          font-size: 0.9em;
+          line-height: 1.6;
+          color: #e2e8f0;
+          font-weight: 400;
+          text-align: justify;
+          background: rgba(15, 23, 42, 0.3);
+          padding: 16px;
+          border-radius: 12px;
+          border-left: 4px solid #fbbf24;
+      }
+      /* Botón de empezar */
+      .start-button {
+          padding: 16px 28px;
+          background: linear-gradient(135deg, #fbbf24, #f59e0b);
+          color: white;
+          border: none;
+          border-radius: 12px;
+          font-size: 1.1em;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+          width: 100%;
+      }
+      .start-button::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+          transition: left 0.5s;
+      }
+      .start-button:hover::before {
+          left: 100%;
+      }
+      .start-button:hover {
+          background: linear-gradient(135deg, #f59e0b, #d97706);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(251, 191, 36, 0.5);
+      }
+      .start-button:active {
+          transform: translateY(0);
+      }
+      /* Contenedor de botones */
+      .buttons-container {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin-top: 20px;
+      }
+      /* Estilos para los botones de casos */
+      .case-button {
+          padding: 14px 24px;
+          background: linear-gradient(135deg, #4f46e5, #7c3aed);
+          color: white;
+          border: none;
+          border-radius: 10px;
+          font-size: 1em;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          position: relative;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          width: 100%;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+      }
+      .case-button::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.5s;
+      }
+      .case-button:hover::before {
+          left: 100%;
+      }
+      .case-button:hover {
+          background: linear-gradient(135deg, #5b21b6, #8b5cf6);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+      }
+      .case-button:active {
+          transform: translateY(0);
+      }
+      /* Botón especial para Caso 1 */
+      .case-button.case-1 {
+          background: linear-gradient(135deg, #ef4444, #dc2626);
+      }
+      .case-button.case-1:hover {
+          background: linear-gradient(135deg, #dc2626, #b91c1c);
+          box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+      }
+      /* Botón especial para Caso 2 */
+      .case-button.case-2 {
+          background: linear-gradient(135deg, #10b981, #059669);
+      }
+      .case-button.case-2:hover {
+          background: linear-gradient(135deg, #059669, #047857);
+          box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+      }
+      /* Decoración adicional */
+      .fire-icon {
+          font-size: 2.5em;
+          margin-bottom: 12px;
+          display: block;
+          animation: flicker 2s infinite alternate;
+      }
+      @keyframes flicker {
+          0% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.8; transform: scale(1.05); }
+          100% { opacity: 1; transform: scale(1); }
+      }
+      /* Información adicional en la parte inferior */
+      .info-footer {
+          position: fixed;
+          bottom: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(15, 23, 42, 0.8);
+          backdrop-filter: blur(10px);
+          padding: 16px 24px;
+          border-radius: 12px;
+          color: #94a3b8;
+          font-size: 0.9em;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          animation: fadeInUp 1s ease-out 0.5s both;
+      }
+      @keyframes fadeInUp {
+          from {
+              opacity: 0;
+              transform: translateX(-50%) translateY(20px);
+          }
+          to {
+              opacity: 1;
+              transform: translateX(-50%) translateY(0);
+          }
+      }
+      /* Controles de cámara info */
+      .camera-controls {
+          position: fixed;
+          top: 20px;
+          left: 20px;
+          background: rgba(15, 23, 42, 0.8);
+          backdrop-filter: blur(10px);
+          padding: 12px 16px;
+          border-radius: 8px;
+          color: #94a3b8;
+          font-size: 0.8em;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          z-index: 50;
+      }
+      /* Estilos para ventanas minimizables */
+      .minimize-button {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+          width: 32px;
+          height: 32px;
+          background: linear-gradient(135deg, #6b7280, #4b5563);
+          border: none;
+          border-radius: 8px;
+          color: white;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 14px;
+          font-weight: bold;
+          transition: all 0.3s ease;
+          z-index: 10;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+      .minimize-button:hover {
+          background: linear-gradient(135deg, #4b5563, #374151);
+          transform: scale(1.1);
+      }
+      .minimized {
+          height: 60px !important;
+          overflow: hidden;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .minimized .minimize-content {
+          opacity: 0;
+          transform: translateY(-20px);
+          transition: all 0.3s ease;
+      }
+      .window-header {
+          position: relative;
+          padding-right: 50px;
+          margin-bottom: 20px;
+      }
+      .minimized .window-header {
+          margin-bottom: 0;
+      }
+      .minimized h1 {
+          font-size: 1.2em !important;
+          margin-bottom: 0 !important;
+          line-height: 1.2;
+      }
+      /* Responsive design */
+      @media (max-width: 768px) {
+          .start-overlay, .welcome-overlay {
+              width: 95%;
+              right: 2.5%;
+              padding: 20px;
+          }
+          .start-overlay h1, .welcome-overlay h1 {
+              font-size: 1.5em;
+          }
+          .welcome-overlay p {
+              font-size: 0.85em;
+              text-align: left;
+          }
+          .camera-controls {
+              font-size: 0.7em;
+              padding: 8px 12px;
+          }
+          .minimize-button {
+              width: 28px;
+              height: 28px;
+              font-size: 12px;
+              top: 10px;
+              right: 10px;
+          }
+          .minimized {
+              height: 50px !important;
+          }
+      }
+  </style>
+</head>
+<body>
+  <!-- Controles de cámara info -->
+  <div class="camera-controls">
+      🎮 Mouse: mirar • WASD: moverte • SPACE: subir • SHIFT: bajar
+  </div>
+
+  <a-scene background="color: #0f172a" vr-mode-ui="enabled: false">
+      <!-- Assets -->
+      <a-assets>
+          <a-mixin id="floor-material"
+                   material="color: #1e293b; roughness: 0.9; metalness: 0.2"
+                   shadow="receive: true; cast: false"></a-mixin>
+          <!-- Aquí puedes cambiar la ruta del modelo GLB -->
+          <a-asset-item id="main-model" src="fire_station.glb"></a-asset-item>
+      </a-assets>
+
+      <!-- Iluminación atmosférica -->
+      <a-light type="ambient" color="#404040" intensity="0.4"></a-light>
+      <a-light type="directional"
+               position="0 50 20"
+               color="#fbbf24"
+               intensity="0.8"
+               shadow="cast: true; mapSize: 1024 1024">
+      </a-light>
+      <!-- Luces de ambiente adicionales -->
+      <a-light type="point"
+               position="15 10 5"
+               color="#ef4444"
+               intensity="2"
+               distance="25"
+               decay="1">
+      </a-light>
+      <a-light type="point"
+               position="-15 10 5"
+               color="#10b981"
+               intensity="2"
+               distance="25"
+               decay="1">
+      </a-light>
+
+      <!-- Suelo -->
+      <a-plane id="floor"
+               position="0 0 0"
+               rotation="-90 0 0"
+               width="100"
+               height="100"
+               mixin="floor-material"
+               shadow="receive: true">
+      </a-plane>
+
+      <!-- Modelo GLB principal (reemplazado con placeholder) -->
+      <a-gltf-model id="house-model"
+                    src="Estacion_bomberos.glb"
+                    position="0 0 0"
+                    scale="1 1 1"
+                    rotation="0 90 0"
+                    shadow="cast: true; receive: true">
+      </a-gltf-model>
+
+      <!-- Cámara con controles mejorados -->
+      <a-entity id="rig" 
+                position="0 1.6 15"
+                enhanced-movement-controls="enabled: true; speed: 8; jumpHeight: 5">
+          <a-camera look-controls="enabled: true; pointerLockEnabled: false"
+                    wasd-controls="enabled: false">
+          </a-camera>
+      </a-entity>
+
+      <!-- Cielo con estrellas -->
+      <a-sky color="#0f172a"></a-sky>
+  </a-scene>
+
+  <!-- Ventana de Inicio -->
+  <div id="startContainer" class="start-overlay">
+      <div class="window-header">
+          <span class="fire-icon">🔥</span>
+          <h1>Simulador de Bomberos</h1>
+          <button class="minimize-button" id="startMinimizeBtn" title="Minimizar/Maximizar">−</button>
+      </div>
+      <div class="minimize-content">
+          <p>
+              Bienvenido al simulador de entrenamiento más avanzado para bomberos. 
+              Explora el entorno 3D y prepárate para enfrentar desafíos reales.
+          </p>
+          <button id="startButton" class="start-button">
+              🚀 Empezar Entrenamiento
+          </button>
+      </div>
+  </div>
+
+  <!-- Ventana de Selección de Escenarios -->
+  <div id="welcomeContainer" class="welcome-overlay">
+      <div class="window-header">
+          <span class="fire-icon">🔥</span>
+          <h1>Entrenamiento Teórico</h1>
+          <button class="minimize-button" id="welcomeMinimizeBtn" title="Minimizar/Maximizar">−</button>
+      </div>
+      <div class="minimize-content">
+          <p>
+              ¡Bienvenido al Simulador de Entrenamiento Teórico para Bomberos! Aquí te sumergirás en escenarios detallados donde analizarás situaciones de emergencia. Prepárate para adquirir la sabiduría y el criterio necesarios para proteger vidas.
+          </p>
+          <div class="buttons-container">
+              <button id="case1Button" class="case-button case-1">
+                  🏠 Ir al Caso 1
+              </button>
+              <button id="case2Button" class="case-button case-2">
+                  🚨 Ir al Caso 2
+              </button>
+          </div>
+      </div>
+  </div>
+
+  <!-- Información del pie -->
+  <div class="info-footer" id="infoFooter">
+      🎮 Explora el entorno 3D con controles completos y haz clic en "Empezar" cuando estés listo
+  </div>
+
+<script>
+    // Componente de controles de movimiento mejorado
+    AFRAME.registerComponent('enhanced-movement-controls', {
+        schema: {
+            enabled: { type: 'boolean', default: true },
+            speed: { type: 'number', default: 5 },
+            jumpHeight: { type: 'number', default: 3 }
+        },
+
+        init: function () {
+            this.keys = {};
+            this.velocity = new THREE.Vector3();
+            this.isGrounded = true;
+            this.gravity = -9.8;
+            this.verticalVelocity = 0;
+            this.groundLevel = 1.6; // Altura de la cámara desde el suelo
+
+            // Bind event handlers
+            this.onKeyDown = this.onKeyDown.bind(this);
+            this.onKeyUp = this.onKeyUp.bind(this);
+
+            // Add event listeners
+            window.addEventListener('keydown', this.onKeyDown);
+            window.addEventListener('keyup', this.onKeyUp);
+
+            // Prevent default space bar behavior
+            window.addEventListener('keydown', function(e) {
+                if(e.code === 'Space') {
+                    e.preventDefault();
+                }
+            });
+        },
+
+        onKeyDown: function (event) {
+            this.keys[event.code] = true;
+        },
+
+        onKeyUp: function (event) {
+            this.keys[event.code] = false;
+        },
+
+        tick: function (time, timeDelta) {
+            if (!this.data.enabled) return;
+
+            const el = this.el;
+            const position = el.getAttribute('position');
+            const camera = el.querySelector('a-camera');
+
+            if (!camera) return;
+
+            const cameraRotation = camera.getAttribute('rotation');
+            const deltaTime = timeDelta / 1000; // Convert to seconds
+
+            // Reset horizontal velocity
+            this.velocity.set(0, 0, 0);
+
+            // Get camera's Y rotation in radians
+            const yaw = THREE.MathUtils.degToRad(cameraRotation.y);
+
+            // Calculate movement vectors based on camera rotation
+            const forward = new THREE.Vector3(
+                -Math.sin(yaw),
+                0,
+                -Math.cos(yaw)
+            );
+            const right = new THREE.Vector3(
+                Math.cos(yaw),
+                0,
+                -Math.sin(yaw)
+            );
+
+            // Handle horizontal movement
+            if (this.keys['KeyW']) {
+                this.velocity.add(forward.clone().multiplyScalar(this.data.speed));
+            }
+            if (this.keys['KeyS']) {
+                this.velocity.add(forward.clone().multiplyScalar(-this.data.speed));
+            }
+            if (this.keys['KeyA']) {
+                this.velocity.add(right.clone().multiplyScalar(-this.data.speed));
+            }
+            if (this.keys['KeyD']) {
+                this.velocity.add(right.clone().multiplyScalar(this.data.speed));
+            }
+
+            // Handle jumping
+            if (this.keys['Space'] && this.isGrounded) {
+                this.verticalVelocity = this.data.jumpHeight;
+                this.isGrounded = false;
+            }
+
+            // Handle crouching/descending
+            if (this.keys['ShiftLeft'] || this.keys['ShiftRight']) {
+                if (position.y > this.groundLevel) {
+                    this.verticalVelocity -= this.data.jumpHeight * 0.5;
+                }
+            }
+
+            // Apply gravity
+            if (!this.isGrounded) {
+                this.verticalVelocity += this.gravity * deltaTime;
+            }
+
+            // Calculate new position
+            const newPosition = {
+                x: position.x + this.velocity.x * deltaTime,
+                y: position.y + this.verticalVelocity * deltaTime,
+                z: position.z + this.velocity.z * deltaTime
+            };
+
+            // Ground collision
+            if (newPosition.y <= this.groundLevel) {
+                newPosition.y = this.groundLevel;
+                this.verticalVelocity = 0;
+                this.isGrounded = true;
+            }
+
+            // Apply position
+            el.setAttribute('position', newPosition);
+        },
+
+        remove: function () {
+            window.removeEventListener('keydown', this.onKeyDown);
+            window.removeEventListener('keyup', this.onKeyUp);
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const rig = document.getElementById('rig');
+
+        // UI Elements
+        const startContainer = document.getElementById('startContainer');
+        const welcomeContainer = document.getElementById('welcomeContainer');
+        const startButton = document.getElementById('startButton');
+        const case1Button = document.getElementById('case1Button');
+        const case2Button = document.getElementById('case2Button');
+        const infoFooter = document.getElementById('infoFooter');
+
+        // Minimize buttons
+        const startMinimizeBtn = document.getElementById('startMinimizeBtn');
+        const welcomeMinimizeBtn = document.getElementById('welcomeMinimizeBtn');
+
+        // Minimization states
+        let startMinimized = false;
+        let welcomeMinimized = false;
+
+        // Toggle minimize functions
+        function toggleStartMinimize() {
+            startMinimized = !startMinimized;
+            if (startMinimized) {
+                startContainer.classList.add('minimized');
+                startMinimizeBtn.innerHTML = '+';
+                startMinimizeBtn.title = 'Maximizar';
+            } else {
+                startContainer.classList.remove('minimized');
+                startMinimizeBtn.innerHTML = '−';
+                startMinimizeBtn.title = 'Minimizar';
+            }
+        }
+
+        function toggleWelcomeMinimize() {
+            welcomeMinimized = !welcomeMinimized;
+            if (welcomeMinimized) {
+                welcomeContainer.classList.add('minimized');
+                welcomeMinimizeBtn.innerHTML = '+';
+                welcomeMinimizeBtn.title = 'Maximizar';
+            } else {
+                welcomeContainer.classList.remove('minimized');
+                welcomeMinimizeBtn.innerHTML = '−';
+                welcomeMinimizeBtn.title = 'Minimizar';
+            }
+        }
+
+        // Event listeners for minimize buttons
+        if (startMinimizeBtn) {
+            startMinimizeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleStartMinimize();
+            });
+        }
+
+        if (welcomeMinimizeBtn) {
+            welcomeMinimizeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleWelcomeMinimize();
+            });
+        }
+
+        // Click to maximize when minimized
+        startContainer.addEventListener('click', (e) => {
+            if (startMinimized && !e.target.closest('.minimize-button') && !e.target.closest('button')) {
+                toggleStartMinimize();
+            }
+        });
+
+        welcomeContainer.addEventListener('click', (e) => {
+            if (welcomeMinimized && !e.target.closest('.minimize-button') && !e.target.closest('button')) {
+                toggleWelcomeMinimize();
+            }
+        });
+
+        // Start button functionality
+        if (startButton) {
+            startButton.addEventListener('click', () => {
+                startButton.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    startContainer.style.display = 'none';
+                    welcomeContainer.style.display = 'block';
+                    infoFooter.innerHTML = '💡 Selecciona un caso para comenzar tu entrenamiento especializado';
+                }, 150);
+            });
+        }
+
+        // Case buttons functionality
+        if (case1Button) {
+            case1Button.addEventListener('click', () => {
+                case1Button.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    window.location.href = 'Escenario1.html';;
+                }, 150);
+            });
+        }
+
+        if (case2Button) {
+            case2Button.addEventListener('click', () => {
+                case2Button.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    window.location.href = 'Escenario2.html';
+                }, 150);
+            });
+        }
+
+        // Enhanced button effects
+        const allButtons = document.querySelectorAll('.case-button, .start-button');
+        allButtons.forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = '50%';
+                ripple.style.top = '50%';
+                ripple.style.width = '20px';
+                ripple.style.height = '20px';
+                ripple.style.marginLeft = '-10px';
+                ripple.style.marginTop = '-10px';
+                button.appendChild(ripple);
+
+                setTimeout(() => {
+                    if (ripple.parentNode) {
+                        ripple.parentNode.removeChild(ripple);
+                    }
+                }, 600);
+            });
+        });
+
+        // Add ripple animation CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Movement control toggle function
+        window.toggleMovement = function(enabled) {
+            if (rig) {
+                rig.setAttribute('enhanced-movement-controls', 'enabled', enabled);
+            }
+        };
+
+        // Initial animation
+        setTimeout(() => {
+            startContainer.style.animation = 'slideInRight 0.5s ease-out';
+        }, 100);
+    });
+</script>
+
+</body>
+</html>
