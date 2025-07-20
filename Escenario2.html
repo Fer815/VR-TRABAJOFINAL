@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Entrenamiento de Bomberos - Escenario 2: Almacén Industrial</title>
+  <meta name="description" content="Escenario de entrenamiento en almacén industrial con materiales peligrosos">
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+      body {
+          margin: 0;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          overflow: hidden;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      /* Botón "Volver a la Estación" en esquina superior derecha */
+      #backToStationButton {
+          position: fixed;
+          top: 30px;
+          right: 30px;
+          padding: 16px 24px;
+          background: linear-gradient(135deg, #f59e0b, #d97706);
+          color: white;
+          border: none;
+          border-radius: 12px;
+          font-size: 1em;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          z-index: 200;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          backdrop-filter: blur(10px);
+      }
+
+      #backToStationButton:hover {
+          background: linear-gradient(135deg, #d97706, #b45309);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+      }
+
+      #backToStationButton:active {
+          transform: translateY(0);
+      }
+
+      /* Responsive para el botón */
+      @media (max-width: 768px) {
+          #backToStationButton {
+              top: 20px;
+              right: 20px;
+              padding: 12px 18px;
+              font-size: 0.9em;
+          }
+      }
+
+      /* Estilo general para los contenedores de UI superpuestos */
+      .ui-overlay {
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+          backdrop-filter: blur(20px);
+          padding: 32px;
+          border-radius: 20px;
+          text-align: center;
+          color: white;
+          z-index: 100;
+          max-width: 90%;
+          width: 650px;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 
+                      0 0 0 1px rgba(255, 255, 255, 0.05);
+          animation: slideIn 0.3s ease-out;
+      }
+
+      @keyframes slideIn {
+          from {
+              opacity: 0;
+              transform: translate(-50%, -60%);
+          }
+          to {
+              opacity: 1;
+              transform: translate(-50%, -50%);
+          }
+      }
+
+      .ui-overlay h2 {
+          margin-top: 0;
+          margin-bottom: 16px;
+          background: linear-gradient(135deg, #fbbf24, #f59e0b);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          font-size: 2em;
+          font-weight: 700;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .ui-overlay p {
+          margin-bottom: 24px;
+          font-size: 1.1em;
+          line-height: 1.6;
+          color: #e2e8f0;
+          font-weight: 400;
+      }
+
+      /* Estilos mejorados para los botones de opción */
+      .option-button {
+          display: block;
+          width: 100%;
+          box-sizing: border-box;
+          padding: 20px 24px;
+          margin-bottom: 16px;
+          background: linear-gradient(135deg, #4f46e5, #7c3aed);
+          color: white;
+          border: none;
+          border-radius: 12px;
+          font-size: 1em;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          text-align: left;
+          position: relative;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .option-button::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.5s;
+      }
+
+      .option-button:hover::before {
+          left: 100%;
+      }
+
+      .option-button:hover {
+          background: linear-gradient(135deg, #5b21b6, #8b5cf6);
+          transform: translateY(-2px);
+          box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+      }
+
+      .option-button strong {
+          color: #fbbf24;
+          font-weight: 600;
+      }
+
+      /* Estilos mejorados para las ventanas de resultado */
+      .result-window h3 {
+          background: linear-gradient(135deg, #10b981, #059669);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          margin-bottom: 20px;
+          font-size: 1.5em;
+          font-weight: 600;
+      }
+
+      .result-window p {
+          text-align: left;
+          font-size: 1em;
+          background: rgba(15, 23, 42, 0.4);
+          padding: 20px;
+          border-radius: 12px;
+          border-left: 4px solid #10b981;
+          line-height: 1.6;
+      }
+
+      .close-button {
+          padding: 14px 32px;
+          margin-top: 24px;
+          background: linear-gradient(135deg, #ef4444, #dc2626);
+          color: white;
+          border-radius: 10px;
+          border: none;
+          cursor: pointer;
+          font-size: 1.1em;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+      }
+
+      .close-button:hover {
+          background: linear-gradient(135deg, #dc2626, #b91c1c);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+      }
+
+      /* Contenedor de descripción de situación mejorado */
+      #situationDescriptionContainer {
+          display: block;
+          position: fixed;
+          bottom: 30px;
+          right: 30px;
+          width: 380px;
+          max-width: 90%;
+          background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+          backdrop-filter: blur(20px);
+          padding: 28px;
+          border-radius: 20px;
+          text-align: center;
+          color: white;
+          z-index: 100;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+          animation: fadeInUp 0.5s ease-out;
+      }
+
+      @keyframes fadeInUp {
+          from {
+              opacity: 0;
+              transform: translateY(30px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      #situationDescriptionContainer h2 {
+          font-size: 1.6em;
+          margin-bottom: 0;
+          margin-top: 0;
+          background: linear-gradient(135deg, #fbbf24, #f59e0b);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          font-weight: 600;
+      }
+
+      #situationDescriptionContainer p {
+          font-size: 1em;
+          margin-bottom: 20px;
+          line-height: 1.5;
+          color: #e2e8f0;
+      }
+
+      #situationDescriptionContainer .start-scenario-button {
+          padding: 16px 28px;
+          background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+          color: white;
+          border: none;
+          border-radius: 12px;
+          font-size: 1.1em;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          width: 100%;
+          box-sizing: border-box;
+          box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+      }
+
+      #situationDescriptionContainer .start-scenario-button:hover {
+          background: linear-gradient(135deg, #1d4ed8, #1e40af);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+      }
+
+      /* Chat UI mejorado */
+      #chat-container {
+          position: fixed;
+          top: 30px;
+          left: 30px;
+          width: 380px;
+          max-width: 90%;
+          background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+          backdrop-filter: blur(20px);
+          padding: 28px;
+          border-radius: 20px;
+          color: white;
+          z-index: 100;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+          animation: fadeInDown 0.5s ease-out;
+      }
+
+      @keyframes fadeInDown {
+          from {
+              opacity: 0;
+              transform: translateY(-30px);
+          }
+          to {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      #chat-container h1 {
+          margin-top: 0;
+          font-size: 1.8em;
+          background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          text-align: center;
+          font-weight: 600;
+          margin-bottom: 0;
+      }
+
+      #chat-form {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          margin-top: 20px;
+      }
+
+      /* Estilos mejorados para el textarea */
+      #chat-form textarea {
+          padding: 16px;
+          border-radius: 12px;
+          border: 1px solid rgba(148, 163, 184, 0.2);
+          background: rgba(15, 23, 42, 0.6);
+          color: white;
+          font-size: 1em;
+          font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+          transition: all 0.3s ease;
+          backdrop-filter: blur(10px);
+          resize: vertical;
+          min-height: 50px;
+          max-height: 150px;
+          line-height: 1.5;
+      }
+
+      #chat-form textarea:focus {
+          outline: none;
+          border-color: #8b5cf6;
+          box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+      }
+
+      #chat-form textarea::placeholder {
+          color: #94a3b8;
+      }
+
+      /* Scrollbar personalizado para el textarea */
+      #chat-form textarea::-webkit-scrollbar {
+          width: 6px;
+      }
+
+      #chat-form textarea::-webkit-scrollbar-track {
+          background: rgba(15, 23, 42, 0.3);
+          border-radius: 3px;
+      }
+
+      #chat-form textarea::-webkit-scrollbar-thumb {
+          background: #8b5cf6;
+          border-radius: 3px;
+      }
+
+      #chat-form textarea::-webkit-scrollbar-thumb:hover {
+          background: #7c3aed;
+      }
+
+      #chat-form button {
+          padding: 16px 20px;
+          background: linear-gradient(135deg, #10b981, #059669);
+          color: white;
+          border: none;
+          border-radius: 12px;
+          cursor: pointer;
+          font-size: 1em;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+      }
+
+      #chat-form button:hover {
+          background: linear-gradient(135deg, #059669, #047857);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+      }
+
+      #respuesta {
+          margin-top: 20px;
+          padding: 20px;
+          background: rgba(15, 23, 42, 0.4);
+          border-radius: 12px;
+          font-size: 0.95em;
+          line-height: 1.6;
+          max-height: 220px;
+          overflow-y: auto;
+          word-wrap: break-word;
+          border-left: 4px solid #8b5cf6;
+          color: #e2e8f0;
+      }
+
+      #respuesta::-webkit-scrollbar {
+          width: 6px;
+      }
+
+      #respuesta::-webkit-scrollbar-track {
+          background: rgba(15, 23, 42, 0.3);
+          border-radius: 3px;
+      }
+
+      #respuesta::-webkit-scrollbar-thumb {
+          background: #8b5cf6;
+          border-radius: 3px;
+      }
+
+      #respuesta::-webkit-scrollbar-thumb:hover {
+          background: #7c3aed;
+      }
+
+      /* Indicador de carga mejorado */
+      .loading {
+          display: inline-block;
+          position: relative;
+      }
+
+      .loading::after {
+          content: '';
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          border: 2px solid #8b5cf6;
+          border-radius: 50%;
+          border-top-color: transparent;
+          animation: spin 1s linear infinite;
+          margin-left: 8px;
+      }
+
+      @keyframes spin {
+          to {
+              transform: rotate(360deg);
+          }
+      }
+
+/* Estilos para ventanas minimizables */
+.minimize-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.minimize-button:hover {
+    background: linear-gradient(135deg, #4b5563, #374151);
+    transform: scale(1.1);
+}
+
+.minimized {
+    height: 60px !important;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.minimized .minimize-content {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+}
+
+.window-header {
+    position: relative;
+    padding-right: 50px;
+    margin-bottom: 20px;
+}
+
+.minimized .window-header {
+    margin-bottom: 0;
+}
+
+.minimized h1 {
+    font-size: 1.2em !important;
+    margin-bottom: 0 !important;
+    line-height: 1.2;
+}
+
+/* Animaciones para minimizar/maximizar */
+@keyframes minimizeWindow {
+    from {
+        height: auto;
+        opacity: 1;
+    }
+    to {
+        height: 60px;
+        opacity: 0.9;
+    }
+}
+
+@keyframes maximizeWindow {
+    from {
+        height: 60px;
+        opacity: 0.9;
+    }
+    to {
+        height: auto;
+        opacity: 1;
+    }
+}
+
+/* Responsive para ventanas minimizadas */
+@media (max-width: 768px) {
+    .minimize-button {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+        top: 10px;
+        right: 10px;
+    }
+
+    .minimized {
+        height: 50px !important;
+    }
+}
+  </style>
+
+  <script>
+    // Componente para simular humo de colores inusuales
+    AFRAME.registerComponent('unusual-smoke', {
+      schema: {
+        color: { type: 'string', default: '#800080' },
+        density: { type: 'number', default: 0.5 },
+        speed: { type: 'number', default: 0.01 },
+      },
+      init: function () {
+        const el = this.el;
+        const data = this.data;
+        for (let i = 0; i < 400; i++) {
+          const smokeParticle = document.createElement('a-sphere');
+          smokeParticle.setAttribute('radius', Math.random() * 0.6 + 0.2);
+          smokeParticle.setAttribute('color', data.color);
+          smokeParticle.setAttribute('opacity', Math.random() * 0.3 + 0.15);
+          smokeParticle.setAttribute('shader', 'flat');
+          smokeParticle.setAttribute('position', {
+            x: (Math.random() - 0.5) * 40,
+            y: Math.random() * 20 + 5,
+            z: (Math.random() - 0.5) * 40,
+          });
+          smokeParticle.setAttribute('animation', {
+            property: 'position',
+            to: `${smokeParticle.object3D.position.x} ${smokeParticle.object3D.position.y + 15} ${smokeParticle.object3D.position.z}`,
+            dur: 12000 + Math.random() * 12000,
+            loop: true,
+            dir: 'alternate',
+            easing: 'linear',
+          });
+          el.appendChild(smokeParticle);
+        }
+      },
+    });
+
+    // Componente para simular fuego
+    AFRAME.registerComponent('fire-effect', {
+      schema: {
+        color: { type: 'string', default: '#FF4500' },
+        size: { type: 'number', default: 1 },
+      },
+      init: function () {
+        const el = this.el;
+        const data = this.data;
+        for (let i = 0; i < 250; i++) {
+          const fireParticle = document.createElement('a-sphere');
+          fireParticle.setAttribute('radius', Math.random() * data.size * 0.15 + 0.08);
+          fireParticle.setAttribute('color', data.color);
+          fireParticle.setAttribute('opacity', Math.random() * 0.9 + 0.3);
+          fireParticle.setAttribute('shader', 'flat');
+          fireParticle.setAttribute('position', {
+            x: (Math.random() - 0.5) * data.size * 1.0,
+            y: Math.random() * data.size * 2.0,
+            z: (Math.random() - 0.5) * data.size * 1.0,
+          });
+          fireParticle.setAttribute('animation', {
+            property: 'position',
+            to: `${fireParticle.object3D.position.x} ${fireParticle.object3D.position.y + data.size * 0.8} ${fireParticle.object3D.position.z}`,
+            dur: 600 + Math.random() * 600,
+            loop: true,
+            dir: 'alternate',
+            easing: 'easeOutQuad',
+          });
+          fireParticle.setAttribute('animation__scale', {
+            property: 'scale',
+            from: '1 1 1',
+            to: '0.4 0.4 0.4',
+            dur: 600 + Math.random() * 600,
+            loop: true,
+            dir: 'alternate',
+            easing: 'easeOutQuad',
+          });
+          el.appendChild(fireParticle);
+        }
+      },
+    });
+  </script>
+</head>
+<body>
+  <!-- Botón "Volver a la Estación" -->
+  <button id="backToStationButton">
+      🏠 Volver a la Estación
+  </button>
+
+  <a-scene background="color: #222">
+    <!-- Assets -->
+    <a-assets>
+      <a-asset-item id="warehouse-model" src="/placeholder.glb?query=industrial%20warehouse%20interior%20with%20high%20shelves%20full%20of%20cardboard%20boxes%20and%20pallets%20realistic%20lighting%20and%20concrete%20floor%20damaged%20structure%20fire%20damage"></a-asset-item>
+    </a-assets>
+
+    <!-- Cámara y cursor -->
+    <a-entity camera look-controls wasd-controls position="-600 0 10">
+      <a-entity cursor="rayOrigin: mouse" raycaster="objects: .clickable" position="0 0 -1" geometry="primitive: ring; radiusOuter: 0.016; radiusInner: 0.01" material="color: white; shader: flat"></a-entity>
+    </a-entity>
+
+    <!-- Luces para simular iluminación de almacén -->
+    <a-light type="ambient" color="#BBBBBB" intensity="0.5"></a-light>
+    <a-light type="point" position="0 8 -5" color="#FFFFFF" intensity="1.5" distance="20"></a-light>
+    <a-light type="point" position="10 8 -15" color="#FFFFFF" intensity="1.2" distance="20"></a-light>
+    <a-light type="point" position="-10 8 -15" color="#FFFFFF" intensity="1.2" distance="20"></a-light>
+
+    <!-- Almacén Industrial -->
+    <a-entity
+      gltf-model="#warehouse-model"
+      position="0 0 -10"
+      scale="10 10 10"
+      rotation="0 0 0"
+      shadow="receive: true"
+    >
+      <!-- Vigas de acero deformadas -->
+      <a-box position="0 1.5 0" width="0.2" height="3" depth="0.2" color="#606060" rotation="0 0 5" shadow></a-box>
+      <a-box position="1 1.5 0" width="0.2" height="3" depth="0.2" color="#606060" rotation="0 0 -5" shadow></a-box>
+      <a-box position="-1 1.5 0" width="0.2" height="3" depth="0.2" color="#606060" rotation="0 0 10" shadow></a-box>
+
+      <!-- Fuego en el almacén -->
+      <a-entity position="0 2 -2" fire-effect="size: 8"></a-entity>
+      <a-entity position="5 1 -8" fire-effect="size: 7"></a-entity>
+      <a-entity position="-5 1 -8" fire-effect="size: 7"></a-entity>
+      <a-entity position="8 3 -12" fire-effect="size: 6"></a-entity>
+      <a-entity position="-8 3 -12" fire-effect="size: 6"></a-entity>
+      <a-entity position="0 5 -15" fire-effect="size: 9"></a-entity>
+      <a-entity position="12 2 -10" fire-effect="size: 5"></a-entity>
+      <a-entity position="-12 2 -10" fire-effect="size: 5"></a-entity>
+      <a-entity position="7 1 -2" fire-effect="size: 4"></a-entity>
+      <a-entity position="-7 1 -2" fire-effect="size: 4"></a-entity>
+      <a-entity position="10 0.5 -5" fire-effect="size: 3"></a-entity>
+      <a-entity position="-10 0.5 -5" fire-effect="size: 3"></a-entity>
+      <a-entity position="3 0.8 0" fire-effect="size: 3"></a-entity>
+      <a-entity position="-3 0.8 0" fire-effect="size: 3"></a-entity>
+      <a-entity position="0 0.5 2" fire-effect="size: 2"></a-entity>
+      <a-entity position="6 6 -7" fire-effect="size: 5"></a-entity>
+      <a-entity position="-6 6 -7" fire-effect="size: 5"></a-entity>
+      <a-entity position="9 7 -10" fire-effect="size: 4"></a-entity>
+      <a-entity position="-9 7 -10" fire-effect="size: 4"></a-entity>
+      <a-entity position="0 8 -12" fire-effect="size: 6"></a-entity>
+
+      <!-- Humo de colores inusuales -->
+      <a-entity position="0 0 0" unusual-smoke="color: #800080"></a-entity>
+      <a-entity position="0 0 0" unusual-smoke="color: #008080"></a-entity>
+    </a-entity>
+  </a-scene>
+
+  <!-- UI Overlays mejoradas -->
+  <!-- Descripción persistente de la situación -->
+  <div id="situationDescriptionContainer">
+    <div class="window-header">
+        <h2>⚠️ Contexto del Escenario</h2>
+        <button class="minimize-button" id="contextMinimizeBtn" title="Minimizar/Maximizar">−</button>
+    </div>
+    <div class="minimize-content">
+        <p>Te encuentras en un almacén industrial con humos de colores inusuales (púrpura y verde azulado) y contenedores con etiquetas de advertencia desconocidas. Las vigas de acero muestran deformación estructural. ¿Cuál es tu decisión?</p>
+        <button id="startScenarioButton" class="start-scenario-button">🚨 Evaluar Opciones de Acción</button>
+    </div>
+</div>
+
+  <!-- Ventana de alternativas de acción -->
+  <div id="optionsContainer" class="ui-overlay">
+      <h2>⚠️ Alternativas de Acción Críticas</h2>
+      <p>Incendio en almacén industrial con materiales peligrosos desconocidos. Humos inusuales (púrpura y verde azulado) y vigas de acero deformadas indican presencia de sustancias químicas peligrosas. Como comandante de incidente, tu decisión es crucial.</p>
+      <button class="option-button" data-target="window1">
+          <strong>Opción A:</strong> Ataque Ofensivo Directo con Agua a Presión
+          <br><small style="opacity: 0.8;">Entrada inmediata con líneas de ataque directo usando agua</small>
+      </button>
+      <button class="option-button" data-target="window2">
+          <strong>Opción B:</strong> Confinamiento Total y Espera Pasiva
+          <br><small style="opacity: 0.8;">Sellar completamente el área y esperar sin intervención</small>
+      </button>
+      <button class="option-button" data-target="window3">
+          <strong>Opción C:</strong> Reconocimiento, Delimitación y Solicitud de Especialistas
+          <br><small style="opacity: 0.8;">Evaluación segura y llamada a equipos especializados en HAZMAT</small>
+      </button>
+  </div>
+
+  <!-- Ventanas de resultado mejoradas -->
+  <div id="window1" class="ui-overlay result-window">
+      <h3>❌ Opción A: Ataque Directo con Agua (INCORRECTA)</h3>
+      <p><strong>Análisis Técnico:</strong> Esta decisión es extremadamente peligrosa en presencia de materiales químicos desconocidos. El agua puede reaccionar violentamente con ciertos químicos, creando gases tóxicos, explosiones o reacciones exotérmicas. Los humos de colores inusuales son indicadores claros de sustancias químicas que requieren protocolos especializados.</p>
+      <p><strong>Consecuencias:</strong> Posible reacción química violenta, intoxicación del personal, explosión, propagación de contaminantes tóxicos al medio ambiente.</p>
+      <button class="close-button">✓ Entendido, Continuar Entrenamiento</button>
+  </div>
+
+  <div id="window2" class="ui-overlay result-window">
+      <h3>❌ Opción B: Confinamiento y Espera Pasiva (INCORRECTA)</h3>
+      <p><strong>Análisis Técnico:</strong> Aunque el confinamiento es importante, la espera pasiva sin evaluación ni acción especializada puede permitir que la situación se deteriore. Las vigas deformadas indican compromiso estructural, y los químicos desconocidos pueden generar productos de combustión altamente tóxicos que se extiendan más allá del área confinada.</p>
+      <p><strong>Consecuencias:</strong> Colapso estructural, propagación de contaminación, pérdida de oportunidad para mitigación temprana, posible escalada del incidente.</p>
+      <button class="close-button">✓ Entendido, Continuar Entrenamiento</button>
+  </div>
+
+  <div id="window3" class="ui-overlay result-window">
+      <h3>✅ Opción C: Reconocimiento y Especialistas (CORRECTA)</h3>
+      <p><strong>Análisis Técnico:</strong> Excelente decisión táctica. Esta estrategia prioriza la seguridad del personal y la evaluación científica de los riesgos. El reconocimiento a distancia segura, la delimitación de zonas de exclusión y la solicitud inmediata de equipos HAZMAT especializados es el protocolo correcto para incidentes con materiales peligrosos desconocidos.</p>
+      <p><strong>Beneficios:</strong> Máxima seguridad del personal, identificación correcta de sustancias químicas, aplicación de técnicas de supresión apropiadas, prevención de contaminación ambiental, preservación de evidencias para investigación.</p>
+      <button class="close-button">✓ Excelente, Continuar Entrenamiento</button>
+  </div>
+
+  <!-- Chat UI mejorado -->
+  <div id="chat-container">
+    <div class="window-header">
+        <h1>🤖 Asistente IA </h1>
+        <button class="minimize-button" id="chatMinimizeBtn" title="Minimizar/Maximizar">−</button>
+    </div>
+    <div class="minimize-content">
+        <form id="chat-form">
+            <textarea id="mensaje" placeholder="Consulta sobre materiales peligrosos, HAZMAT, protocolos químicos...&#10" required rows="3"></textarea>
+            <button type="submit">💬 Consultar Experto</button>
+        </form>
+        <div id="respuesta"></div>
+    </div>
+</div>
+
+  <script>
+      document.addEventListener('DOMContentLoaded', () => {
+          const situationDescriptionContainer = document.getElementById('situationDescriptionContainer');
+          const startScenarioButton = document.getElementById('startScenarioButton');
+          const optionsContainer = document.getElementById('optionsContainer');
+          const optionButtons = document.querySelectorAll('.option-button');
+          const closeButtons = document.querySelectorAll('.close-button');
+          const resultWindows = document.querySelectorAll('.result-window');
+
+          // Elementos del chat
+          const chatContainer = document.getElementById('chat-container');
+          const chatForm = document.getElementById("chat-form");
+          const mensajeTextarea = document.getElementById("mensaje");
+          const respuestaDiv = document.getElementById("respuesta");
+
+          // Botón "Volver a la Estación"
+          const backToStationButton = document.getElementById('backToStationButton');
+
+          // Elementos para minimizar/maximizar
+          const chatMinimizeBtn = document.getElementById('chatMinimizeBtn');
+          const contextMinimizeBtn = document.getElementById('contextMinimizeBtn');
+
+          // Estados de minimización
+          let chatMinimized = false;
+          let contextMinimized = false;
+
+          // Función para alternar minimización del chat
+          function toggleChatMinimize() {
+              chatMinimized = !chatMinimized;
+              if (chatMinimized) {
+                  chatContainer.classList.add('minimized');
+                  chatMinimizeBtn.innerHTML = '+';
+                  chatMinimizeBtn.title = 'Maximizar';
+              } else {
+                  chatContainer.classList.remove('minimized');
+                  chatMinimizeBtn.innerHTML = '−';
+                  chatMinimizeBtn.title = 'Minimizar';
+              }
+          }
+
+          // Función para alternar minimización del contexto
+          function toggleContextMinimize() {
+              contextMinimized = !contextMinimized;
+              if (contextMinimized) {
+                  situationDescriptionContainer.classList.add('minimized');
+                  contextMinimizeBtn.innerHTML = '+';
+                  contextMinimizeBtn.title = 'Maximizar';
+              } else {
+                  situationDescriptionContainer.classList.remove('minimized');
+                  contextMinimizeBtn.innerHTML = '−';
+                  contextMinimizeBtn.title = 'Minimizar';
+              }
+          }
+
+          // Event listeners para los botones de minimizar
+          if (chatMinimizeBtn) {
+              chatMinimizeBtn.addEventListener('click', (e) => {
+                  e.stopPropagation();
+                  toggleChatMinimize();
+              });
+          }
+
+          // Event listeners para el botón "Volver a la Estación"
+          if (backToStationButton) {
+              backToStationButton.addEventListener('click', () => {
+                  backToStationButton.style.transform = 'scale(0.95)';
+                  setTimeout(() => {
+                      window.location.href = 'index.html';
+                  }, 150);
+              });
+          }
+
+          // Event listener para el botón "Evaluar Opciones de Acción"
+          if (startScenarioButton) {
+              startScenarioButton.addEventListener('click', () => {
+                  situationDescriptionContainer.style.display = 'none';
+                  optionsContainer.style.display = 'block';
+                  chatContainer.style.display = 'none';
+              });
+          }
+
+          // Event listeners para botones de opción
+          optionButtons.forEach(button => {
+              button.addEventListener('click', () => {
+                  optionsContainer.style.display = 'none';
+                  const targetWindowId = button.dataset.target;
+                  const targetWindow = document.getElementById(targetWindowId);
+                  if (targetWindow) {
+                      targetWindow.style.display = 'block';
+                  }
+              });
+          });
+
+          // Event listeners para botones de cerrar
+          closeButtons.forEach(button => {
+              button.addEventListener('click', () => {
+                  const parentWindow = button.closest('.ui-overlay.result-window');
+                  if (parentWindow) {
+                      parentWindow.style.display = 'none';
+                  }
+                  situationDescriptionContainer.style.display = 'block';
+                  chatContainer.style.display = 'block';
+              });
+          });
+
+          // Lógica del formulario de chat mejorada
+          if (chatForm) {
+            chatForm.addEventListener("submit", async function(e) {
+              e.preventDefault();
+              const mensaje = mensajeTextarea.value.trim();
+              if (!mensaje) return;
+
+              respuestaDiv.innerHTML = '<span class="loading">🤖 Analizando consulta sobre materiales peligrosos...</span>';
+
+              try {
+                const res = await fetch("https://chatbot-backend-bz24.onrender.com/chat", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({ mensaje })
+                });
+
+                if (!res.ok) {
+                  throw new Error(`Error del servidor: ${res.status}`);
+                }
+
+                const data = await res.json();
+                respuestaDiv.innerHTML = `<strong>🧪 Respuesta del Experto HAZMAT:</strong><br><br>${data.respuesta || "Sin respuesta disponible."}`;
+              } catch (error) {
+                respuestaDiv.innerHTML = `<strong>⚠️ Error de Conexión:</strong><br><br>No se pudo conectar con el servidor de IA. Verifica tu conexión a internet e intenta nuevamente.<br><br><em>Error técnico: ${error.message}</em>`;
+                console.error('Error en chat:', error);
+              } finally {
+                mensajeTextarea.value = "";
+                autoResizeTextarea(mensajeTextarea);
+              }
+            });
+          }
+
+          // Mejorar la experiencia del textarea
+          if (mensajeTextarea) {
+              mensajeTextarea.addEventListener('keypress', function(e) {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                      e.preventDefault();
+                      chatForm.dispatchEvent(new Event('submit'));
+                  }
+              });
+          }
+
+          if (contextMinimizeBtn) {
+              contextMinimizeBtn.addEventListener('click', (e) => {
+                  e.stopPropagation();
+                  toggleContextMinimize();
+              });
+          }
+
+          // Permitir maximizar haciendo clic en el título cuando está minimizado
+          chatContainer.addEventListener('click', (e) => {
+              if (chatMinimized && !e.target.closest('.minimize-button')) {
+                  toggleChatMinimize();
+              }
+          });
+
+          situationDescriptionContainer.addEventListener('click', (e) => {
+              if (contextMinimized && !e.target.closest('.minimize-button')) {
+                  toggleContextMinimize();
+              }
+          });
+
+          // Función para auto-redimensionar el textarea
+          function autoResizeTextarea(textarea) {
+              textarea.style.height = 'auto';
+              textarea.style.height = Math.min(textarea.scrollHeight, 150) + 'px';
+          }
+
+          // Event listener para auto-redimensionar el textarea
+          if (mensajeTextarea) {
+              mensajeTextarea.addEventListener('input', function() {
+                  autoResizeTextarea(this);
+              });
+              autoResizeTextarea(mensajeTextarea);
+          }
+      });
+  </script>
+</body>
+</html>
